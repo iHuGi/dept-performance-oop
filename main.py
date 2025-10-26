@@ -1,6 +1,9 @@
+# Import the class from the other file
 from departments import DepartmentAnalyzer
 
+# Global threshold for the warning list
 PASSING_THRESHOLD = 85
+
 
 def main():
     # --- DATA ---
@@ -15,20 +18,31 @@ def main():
         {"name": "Heidi", "department": "IT", "scores": [65, 70, 68]},
     ]
 
-    # 1. Instantiate the class
+    # 1. Instantiate the class (creates the object and caches grouped scores)
     analyzer = DepartmentAnalyzer(employees)
 
-    # 2. Call the object's methods
+    # -------------------- DEBUGGING & DIAGNOSTICS --------------------
+    print("=" * 40)
+    print("  DEBUG: INITIAL STATE & CACHE CHECK")
+    print("=" * 40)
+    print(f"Total Employees Loaded: {len(employees)}")
+    print(f"Target Warning Threshold: {PASSING_THRESHOLD}")
+
+    print("\nPre-Grouped Scores (Cached State - from __init__):")
+    # Call the diagnostic method to view the internal state
+    analyzer.print_department_cache()
+    print("-" * 40)
+    # -----------------------------------------------------------------
+
+    # 2. Call the object's methods to get the final reports
     avg_scores_by_dept, highest_scores_by_dept = analyzer.get_department_stats()
     employees_to_warn = analyzer.get_warning_list(PASSING_THRESHOLD)
 
-    # --- PRINT RESULTS ---
+    # --- FINAL REPORT RESULTS ---
 
     print("=" * 40)
-    print("  EMPLOYEE PERFORMANCE ANALYSIS (Modular)")
+    print("  EMPLOYEE PERFORMANCE ANALYSIS REPORT")
     print("=" * 40)
-
-    print("\n--- Department Statistics ---")
 
     print("\nAverage Score Per Department:")
     for dept, avg in avg_scores_by_dept.items():
@@ -48,6 +62,6 @@ def main():
     print("=" * 40)
 
 
-# This is the standard entry point for Python scripts
+# This ensures the main function runs only when the script is executed directly
 if __name__ == "__main__":
     main()
